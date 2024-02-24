@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname,"/client/build")));
 const port = process.env.PORT;
 
 try{
+
   await mongoose
   .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
@@ -127,6 +128,7 @@ app.get("*",(req,res)=>{
 })
 
 app.listen(port, () => {
+
   console.log(`App is running on Port ${port}`);
 });
 
