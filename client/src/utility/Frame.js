@@ -43,7 +43,7 @@ function Frame({onBringData}) {
     const [checksRes,setChecksRes] = useState(inputsVal);
     const [i,setI] = useState(0);
 
-    const [broughtData,setBroughtData] = useState(new Kelime("gg","bitti"));
+    const [broughtData,setBroughtData] = useState(new Kelime("hf","bitti"));
 
 
     let ref = useRef(null)
