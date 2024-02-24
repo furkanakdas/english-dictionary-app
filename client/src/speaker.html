@@ -1,0 +1,51 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="a">asdsd</div>
+
+    <script>
+
+document.getElementById("a").addEventListener("click",x)
+
+let speech = new SpeechSynthesisUtterance("Roger That");
+
+let speaker = window.speechSynthesis;
+
+function x(){
+
+    speech.voice = speaker.getVoices()[2]
+    speech.rate=0.9
+
+    console.log(speaker.getVoices());
+
+
+    speaker.speak(speech);
+    
+    speech.addEventListener("end", (event) => {
+
+        setTimeout((e)=>{speaker.speak(speech)},1000)
+    
+    });
+
+
+
+}
+
+
+
+
+
+    </script>
+</body>
+</html>
+

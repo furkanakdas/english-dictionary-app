@@ -1,0 +1,46 @@
+import React from "react";
+
+function Modal({ title = "Title", body, trigger, id,className }) {
+  return (
+    <>
+      <div data-bs-toggle="modal" data-bs-target={`#${id}`}>
+        {trigger}
+      </div>
+
+      <div
+        className={"modal fade " + className }
+        id={id}
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog ">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1
+                style={{ color: "white" }}
+                className="modal-title fs-5"
+                id="exampleModalLabel"
+              >
+                {title}
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">{body}</div>
+            {/* <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" className="btn btn-primary">Save changes</button>
+    </div> */}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Modal;
