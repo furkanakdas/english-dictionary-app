@@ -98,7 +98,7 @@ app.get("/word",async (req,res)=>{
     })
   }
 
-  let words = await Word.find(filter).sort({createdAt:1}).limit(20);
+  let words = await Word.find(filter).sort({createdAt:1}).limit(10);
   
     
   res.json({success:{message:"All Words",data:words}});
