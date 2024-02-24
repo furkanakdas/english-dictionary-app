@@ -28,8 +28,8 @@ const word = new mongoose.Schema({
     english:String,
     turkish:String,
     pronounce:String,
-    type:{type:String,enum:["word","expression"]},
-    level:{type:String,enum:["easy","medium","hard"]},
+    type:{type:String,default:"word",enum:["word","expression"]},
+    level:{type:String,default:"hard",enum:["easy","medium","hard"]},
     view:{type:Number,default:0},
     createdAt: {
         type: Date,

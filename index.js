@@ -5,7 +5,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { Word } from "./models/Word.js";
 import path from "path"
-import { log } from "console";
+import { parse } from 'csv-parse';
+import fs, { truncate } from "fs"
 
 const __dirname = path.resolve();
 
@@ -27,6 +28,32 @@ try{
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
+
+  // const dosyaYolu = './test.csv';
+
+  // fs.createReadStream(dosyaYolu)
+  // .pipe(parse({
+  //   delimiter: ',',
+  //   quote: '"',
+  //   headers: true,
+  //   columns:["","eng","tr","telaffuz","Derece","Tek"]
+  // }))
+  // .on('data',async (satir) => {
+
+  //   let type;
+
+  //   if(satir.Derece.toString() == "deyim"){
+  //     type = "expression";
+  //   }else{
+  //     type="word"
+  //   }
+    
+  //   let o = {english:satir.eng,turkish:satir.tr,pronounce:satir.telaffuz,type:type}
+  //   await Word.create(o);
+  // })
+  // .on('end', () => {
+  //   console.log('CSV dosyası okuma tamamlandı');
+  // });
 
 
 }catch(e){
@@ -71,7 +98,7 @@ app.get("/word",async (req,res)=>{
     })
   }
 
-  let words = await Word.find(filter).sort({createdAt:1}).limit(3);
+  let words = await Word.find(filter).sort({createdAt:1}).limit(20);
   
     
   res.json({success:{message:"All Words",data:words}});
