@@ -34,7 +34,7 @@ let space;
 
 let clicker = "user"
 
-function Frame({onBringData}) {
+function Frame({onBringData,dataAttributes}) {
 
 
     let outletContext = useOutletContext();
@@ -139,18 +139,9 @@ function Frame({onBringData}) {
         if(play){
           
           speakRepeatedly();
-          space = outletContext.voiceOptions[VoiceFields.Delay]*1000;
-          // interval = setInterval(()=>{
-           
-          // ref.current.dispatchEvent(mouseDownEvent);
-          // setTimeout(()=>{ref.current.dispatchEvent(mouseUpEvent);ref.current.click()},400)
-          // },outletContext.voiceOptions[VoiceOptionFields.Delay]*1000) 
-      
-          
+          space = outletContext.voiceOptions[VoiceFields.Delay]*1000;          
         }else{
-          // clearInterval(interval)
           clearTimeout(timeOut);
-
         }
   
          return ()=>{clearTimeout(timeOut)}
@@ -161,12 +152,13 @@ function Frame({onBringData}) {
   return (
     <div className='frame'>
         
-            <div ref={ref}
+            <div  ref={ref}
             onMouseUp={(e)=>{e.target.classList.remove("pressed")}}
             onMouseDown={(e)=>{e.target.classList.add("pressed")}}
             onClick={handleBringClick} className='bring'>Bring</div>
 
             <div 
+            {...dataAttributes}
             value={broughtData.english} onClick={handleDataClick} title={broughtData.turkish} className='data'>
               {checksRes.hide === "false" ? broughtData.english : "?"}
              </div>

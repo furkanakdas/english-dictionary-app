@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import InputGroup from '../utility/InputGroup';
 import Frame from '../utility/Frame';
 import { FilterFields, FilterWordLevels } from '../models';
@@ -11,46 +11,48 @@ function Random() {
 
     let outletContext = useOutletContext();
     let myFetch = useFetch();
+    let navigate = useNavigate();
 
     async function handleBringClick(){
 
-      let filter = {where:JSON.stringify(outletContext.filterOptions)}
+
+      let randomIndex =  Math.floor(Math.random() * outletContext.wordCount);
+
+      let filter = {...outletContext.filterOptions,...outletContext.searchFilter,limit:1,skip:randomIndex};
 
 
-     let res =await myFetch({method:"get",path:"/word",queryParams:filter})
+     let res =await myFetch({method:"get",path:"/word/filter",queryParams:filter})
 
-    if(!res.error){
+      if(!res.error){
 
       let words = res.success.data;
 
-
-      let randomIndex =  Math.floor(Math.random() * words.length);
-
-      return {...words[randomIndex]};
+      return {...words[0]};
 
     }else{
       console.log(res.error);
     }
 
-
-
-      
-
-     
-      
     }
+
+    useEffect(()=>{
+
+
+
+    },[outletContext.filterOptions,outletContext.searchFilter])
+
 
    useEffect(()=>{
 
-    outletContext.setPlace(<></>)
+    //outletContext.setPlace(<></>)
 
-   },[])
+   },[outletContext.filterOptions,outletContext.searchFilter])
 
 
   return (
     <div className='random'>
 
-          <Frame onBringData={handleBringClick} />
+          <Frame   onBringData={handleBringClick} />
 
     </div>
   )

@@ -5,7 +5,7 @@ import {  setRate, setVoice, turnOffVolume, turnOnVolume } from '../speaker';
 import VoiceOption from './VoiceOption';
 import FilterOption from './FilterOption';
 import { useFetch } from '../hooks/useFetch';
-import SearchBox from '../pages/Dictionary/components/SearchBox';
+import SearchBox from './SearchBox';
 
 
 const inputs = [

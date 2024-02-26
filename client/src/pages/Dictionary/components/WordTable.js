@@ -40,7 +40,7 @@ function WordTable({filters}) {
     useEffect(()=>{
 
 
-        if(filters && filters.limit){
+        if(filters){
             getWords()
 
         }
@@ -189,7 +189,7 @@ function WordTable({filters}) {
           inputsVal={initialAddWordValues}  />}
           id={"modalAddWord"}
           title="Add Word"
-          trigger={<div className="fw-bold btn btn-light me-3">Add Word +</div>}
+          trigger={<div  className="fw-bold btn btn-secondary add-word">Add Word +</div>}
         />
       </caption>
 
@@ -210,7 +210,7 @@ function WordTable({filters}) {
               }`}
               key={word[DictionaryFields.Id]}
             >
-              <th scope="row">{index + 1}</th>
+              <th scope="row">{index + 1 + filters.skip}</th>
 
               {inputs.map((field) => {
                 if (field.type == "select") {

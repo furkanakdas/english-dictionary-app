@@ -78,11 +78,12 @@ function Pagination({onPageChange}) {
 
   return (
     <nav aria-label="...">
-      <ul class="pagination">
+      <ul className="pagination d-flex">
 
         
-       <li className="page-item ">
-          <a onClick={()=>{setCurrPage(currPage-1)}} className={`page-link ${currPage <= 1 && "disabled"} `} href="#">
+       <li style={{flex:1}} className="page-item ">
+          <a onClick={()=>{setCurrPage(currPage-1)}}
+           className={`fw-bold text-center page-link ${currPage <= 1 && "disabled"} `} href="#">
             Previous
           </a>
         </li>
@@ -91,20 +92,21 @@ function Pagination({onPageChange}) {
         {pages.map((page, i) => {
           if (page == "li") {
             return (
-              <li  className="page-item">
-                <a className={`page-link ${i+1 == currPage && "active"}`}
+              <li style={{flex:1}} className="page-item">
+                <a className={`text-center page-link ${i+1 == currPage && "active"}`}
                  onClick={()=>{setCurrPage(i+1)}} href="#">
                   {i+1}
                 </a>
               </li>
             );
-          }else if(page == "."){return <div style={{fontSize:"19px",fontWeight:"bold",color:"blue"}}>..........</div>}
+          }else if(page == ".")
+          {return <div style={{fontSize:"19px",fontWeight:"bold",color:"blue"}}>...............</div>}
     
         })}
 
-         <li className="page-item">
+         <li style={{flex:1}} className="page-item">
           <a onClick={()=>{setCurrPage(currPage+1)}} 
-          className={`page-link ${currPage >= pages.length && "disabled"} `}
+          className={`fw-bold text-center page-link ${currPage >= pages.length && "disabled"} `}
           href="#">
             Next
           </a>

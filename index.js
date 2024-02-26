@@ -81,42 +81,47 @@ app.use("/",(req,res,next)=>{
 
 app.use("/word/filter",(req,res,next) =>{
 
-  Object.keys(req.query).forEach(key =>{
+  try {
+    Object.keys(req.query).forEach(key =>{
 
-    if(isJsonStructure(req.query[key])){
-      req.query[key] = JSON.parse(req.query[key]);
-    }
-
-  })
-
-  let myQuery = Word.find();
-
-
-  if(req.query.where){
-
-    Object.keys(req.query.where).forEach(key =>{
-      myQuery.where(key).equals(req.query.where[key])
+      if(isJsonStructure(req.query[key])){
+        req.query[key] = JSON.parse(req.query[key]);
+      }
+  
     })
+  
+    let myQuery = Word.find();
+  
+  
+    if(req.query.where){
+  
+      Object.keys(req.query.where).forEach(key =>{
+        myQuery.where(key).equals(req.query.where[key])
+      })
+    }
+  
+    if(req.query.like){
+      Object.keys(req.query.like).forEach(key =>{
+        myQuery.where(key).regex(new RegExp(req.query.like[key],"i"))
+      }) 
+    }
+  
+  
+    if(req.query.skip){
+      myQuery.skip(req.query.skip)
+    }
+  
+    if(req.query.limit){
+      myQuery.limit(req.query.limit)
+    }
+  
+    req.myQuery = myQuery;
+  
+    next();
+  } catch (error) {
+    console.log(error);
+    res.json({error:error})
   }
-
-  if(req.query.like){
-    Object.keys(req.query.like).forEach(key =>{
-      myQuery.where(key).regex(new RegExp(req.query.like[key],"i"))
-    }) 
-  }
-
-
-  if(req.query.skip){
-    myQuery.skip(req.query.skip)
-  }
-
-  if(req.query.limit){
-    myQuery.limit(req.query.limit)
-  }
-
-  req.myQuery = myQuery;
-
-  next();
 
 
 })

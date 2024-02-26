@@ -18,6 +18,7 @@ function Input({onChange, input, inputVal}) {
             name={input.name}
             className={`${input.class ? input.class : " form-control"}`}
             step="0.1"
+            min={"0"}
           />
     </div>
 

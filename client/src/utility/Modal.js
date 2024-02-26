@@ -18,7 +18,7 @@ function Modal({ title = "Title", body, trigger, id,className }) {
           <div className="modal-content">
             <div className="modal-header">
               <h1
-                style={{ color: "white" }}
+                
                 className="modal-title fs-5"
                 id="exampleModalLabel"
               >

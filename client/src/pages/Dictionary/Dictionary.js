@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, useOutletContext } from "react-router-dom";
 import Modal from "../../utility/Modal";
-import SearchBox from "./components/SearchBox";
 import InputGroup from "../../utility/InputGroup";
 import { setText, setVoice, speak } from "../../speaker";
 import { useFetch } from "../../hooks/useFetch";
