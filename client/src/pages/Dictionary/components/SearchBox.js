@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { KelimeFields } from '../models';
+import { KelimeFields } from '../../../models';
 
 
 function SearchBox({onSearch,input,inputVal}) {

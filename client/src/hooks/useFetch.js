@@ -18,6 +18,14 @@ export function useFetch(){
             let fullUrl = url + path;
             
             if(queryParams){
+
+                Object.keys(queryParams).forEach((key,index)=>{
+
+                    if(typeof queryParams[key] == "object"){
+                        queryParams[key] = JSON.stringify(queryParams[key])
+                    }
+
+                })
                 
                 Object.keys(queryParams).forEach((key,index) =>{
                     if(index == 0)

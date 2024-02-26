@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import {  EngLanguages, FilterWordLevels, Voice, VoiceFields } from '.././models';
+import {  EngLanguages, FilterWordLevels, KelimeFields, Voice, VoiceFields } from '.././models';
 import {  setRate, setVoice, turnOffVolume, turnOnVolume } from '../speaker';
 import VoiceOption from './VoiceOption';
 import FilterOption from './FilterOption';
+import { useFetch } from '../hooks/useFetch';
+import SearchBox from '../pages/Dictionary/components/SearchBox';
 
 
 const inputs = [
@@ -23,12 +25,17 @@ function NavBar() {
 
     let location = useLocation();
 
+    let myFetch = useFetch();
+
     const [voiceOptions,setVoiceOptions] = 
     useState(initialVoiceOptions);
    
    
     const [filterOptions,setFilterOptions] =
      useState(initialFilterOptions);
+
+     const [searchFilter,setSearchFilter] = useState("");
+
 
 
 
@@ -48,12 +55,7 @@ function NavBar() {
 
   });
 
-
-
-    useEffect(()=>{
-
-
-    },[location.pathname])
+  
 
     function setPlace(place){
         setVarPlace(place)
@@ -83,8 +85,16 @@ function NavBar() {
 
       toBeDeletedKeys.forEach(key => {delete _filterOptions[key]})
 
-      setFilterOptions(_filterOptions)
 
+      let whereFilter = {where:_filterOptions}
+
+      setFilterOptions(whereFilter)
+
+    }
+
+    function handleSearch(searchFilter){
+
+      setSearchFilter({like:searchFilter})
     }
 
 
@@ -133,7 +143,10 @@ function NavBar() {
 
       </ul>
       {varPlace}
-      
+      <SearchBox
+        input={{name:KelimeFields.English}}
+        inputVal={""}
+        onSearch={handleSearch}  />
     </div>
   </div>
 </nav>
@@ -141,7 +154,8 @@ function NavBar() {
 
 <div className={`feed ${ links.find(i=>i.to===location.pathname).bg } `}>
 
-  <Outlet context={{setPlace:setPlace,voiceOptions:voiceOptions,filterOptions:filterOptions}} />
+  <Outlet context={{setPlace:setPlace,voiceOptions:voiceOptions,
+  filterOptions:filterOptions,searchFilter:searchFilter}} />
 
 </div>
 

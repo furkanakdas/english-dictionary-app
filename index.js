@@ -61,45 +61,105 @@ try{
 }
 
 
+function isJsonStructure(variable) {
+  if (typeof variable !== "string") return false;
+  try {
+      const parsedJson = JSON.parse(variable);
+      return typeof parsedJson === "object" && parsedJson !== null;
+  } catch (error) {
+      return false;
+  }
+}
 
-app.post("/word", async (req,res)=>{
+app.use("/",(req,res,next)=>{
 
-  await Word.find({english:{$regex:/as/i}})
+  console.log("as");
 
+  next();
+})
+
+
+app.use("/word/filter",(req,res,next) =>{
+
+  Object.keys(req.query).forEach(key =>{
+
+    if(isJsonStructure(req.query[key])){
+      req.query[key] = JSON.parse(req.query[key]);
+    }
+
+  })
+
+  let myQuery = Word.find();
+
+
+  if(req.query.where){
+
+    Object.keys(req.query.where).forEach(key =>{
+      myQuery.where(key).equals(req.query.where[key])
+    })
+  }
+
+  if(req.query.like){
+    Object.keys(req.query.like).forEach(key =>{
+      myQuery.where(key).regex(new RegExp(req.query.like[key],"i"))
+    }) 
+  }
+
+
+  if(req.query.skip){
+    myQuery.skip(req.query.skip)
+  }
+
+  if(req.query.limit){
+    myQuery.limit(req.query.limit)
+  }
+
+  req.myQuery = myQuery;
+
+  next();
+
+
+})
+
+
+
+app.get("/word/filter/count",async (req,res)=>{
 
   try {
-    let newWord =  await Word.create(req.body);
 
-    res.json({success:{message:"Word Inserted!",data:newWord}})
-  } catch (e) {
-    res.json({error:e})
+    let number = await req.myQuery.countDocuments().exec();
+
+    res.json({success:{message:"no",data:number}})
+
+  } catch (error) {
+    console.log(error);
+    res.json({error:error})
   }
 
 })
 
+
+app.get("/word/filter",async (req,res)=>{
+
+  try {
+
+      let words = await req.myQuery.sort({createdAt:1}).exec();
+       res.json({success:{message:"All Words",data:words}});
+    
+
+  } catch (error) {
+    console.log(error);
+    res.json({error:error})
+  }
+
+})
+
+
 app.get("/word",async (req,res)=>{
   try {
 
-  let filter = {}
-
-  if(req.query.where){
-    let where = JSON.parse(req.query.where);
-    Object.assign(filter,where);
-  }
-
- 
-
-  if(req.query.like){
-    let like = JSON.parse(req.query.like);
-
-    Object.keys(like).forEach(key =>{
-
-    Object.assign(filter,{[key]:{$regex:new RegExp(like[key],"i")}});
-    })
-  }
-
   let words = await Word.find(filter).sort({createdAt:1}).limit(25);
-  
+
     
   res.json({success:{message:"All Words",data:words}});
 
@@ -122,6 +182,19 @@ app.delete("/word/:id",async (req,res)=>{
 
   } catch (error) {
     res.json({error:error})
+  }
+
+})
+
+
+app.post("/word", async (req,res)=>{
+
+  try {
+    let newWord =  await Word.create(req.body);
+
+    res.json({success:{message:"Word Inserted!",data:newWord}})
+  } catch (e) {
+    res.json({error:e})
   }
 
 })

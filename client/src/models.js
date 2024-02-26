@@ -125,39 +125,3 @@ export class Filter{
     this.level=level;
   }
 }
-
-
-// export const  Word = Object.freeze( {
-//     English:"english",
-//     Turkish:"turkish",
-//     Pronounce:"pronounce",
-//     Type:"type",
-//     Level:"level"
-//   })
-
-//   export const WordObject = Object.freeze({
-//     [Word.English]:"",[Word.Turkish]:"",[Word.Pronounce]:"",[Word.Type]:"",[Word.Level]:""
-//   })
-  
-//   export const enumType = Object.freeze({Word:"word",Expression:"expression"})
-  
-//   export const enumLevel = Object.freeze({Easy:"easy",Medium:"medium",Hard:"hard"})
-
-//   function Word(english="",turkish="",pronounce="",type=0,level=0,editable="false"){
-    
-//     this.english  = english;
-//     this.turkish  = turkish;
-//     this.pronounce  = pronounce;
-//     this.type  = type;
-//     this.level  = level;
-//     this.editable  = editable;
-
-//     this.copy = function(word){
-//         word.english  = this.english;
-//         word.turkish  = this.turkish;
-//         word.pronounce  = this.pronounce;
-//         word.type  = this.type;
-//         word.level  = this.level;
-//         word.editable  = this.editable;
-//     }
-// }

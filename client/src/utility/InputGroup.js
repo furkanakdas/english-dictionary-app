@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
-import Radio from "../inputs/Radio";
-import Check from "../inputs/Check";
-import Select from "../inputs/Select";
-import Input from "../inputs/Input";
-import IconCheck from "../inputs/IconCheck";
-import Range from "../inputs/Range";
+import Radio from "./inputs/Radio";
+import Check from "./inputs/Check";
+import Select from "./inputs/Select";
+import Input from "./inputs/Input";
+import IconCheck from "./inputs/IconCheck";
+import Range from "./inputs/Range";
 
 function InputGroup({inputs,inputsVal,onOk=()=>{},resetOnOk = false,autoOk=false}) {
 
 
     const [cInputsVal,setCInputsVal] = useState(()=>{
-    
+
         return {...inputsVal}
 
     })
 
 
     useEffect(()=>{
+
       setCInputsVal({...inputsVal})
 
     },[inputsVal])

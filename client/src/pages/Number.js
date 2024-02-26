@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom';
-import Range from '../inputs/Range';
+import Range from '../utility/inputs/Range';
 import InputGroup from '../utility/InputGroup';
 import Frame from '../utility/Frame';
 import { Kelime } from '../models';
