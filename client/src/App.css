@@ -171,7 +171,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  background-image: url("../public/images/pexels-pixabay-355465.jpg") ;
+  /* background-image: url("../public/images/pexels-pixabay-355465.jpg") ; */
 }
 
 .sky-2{
@@ -179,7 +179,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  background-image: url("../public/images/pexels-photo-440731.jpeg") ;
+  /* background-image: url("../public/images/pexels-photo-440731.jpeg") ; */
 }
 
 .number .my-input-group .range{
