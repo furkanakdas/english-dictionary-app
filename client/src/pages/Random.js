@@ -52,7 +52,15 @@ function Random() {
   return (
     <div className='random'>
 
-          <Frame   onBringData={handleBringClick} />
+          <Frame 
+          dataAttributes={{onContextMenu:(e)=>{
+            e.preventDefault();
+            if(true){
+              outletContext.setSearchValue(`^${e.target.getAttribute("value")}$`)
+              navigate("/dictionary")
+            }
+            }}}
+          onBringData={handleBringClick} />
 
     </div>
   )

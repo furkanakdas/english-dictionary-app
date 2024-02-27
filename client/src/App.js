@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Dictionary from './pages/Dictionary/Dictionary.js';
 import Random from './pages/Random.js';
@@ -34,7 +34,7 @@ function App() {
   //   alert(e)
   // },[e])
 
-
+  let location = useLocation();
 
  
  
@@ -43,7 +43,7 @@ function App() {
 
 
          <Routes>
-
+         
           <Route path='/' element={<Navigate to={"/number"} />} />
 
           <Route element={<NavBar />} >

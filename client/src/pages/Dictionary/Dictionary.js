@@ -44,7 +44,7 @@ function Dictionary() {
   return (
     <div>
 
-
+    
       <WordTable filters={filters} />
 
       <Pagination  onPageChange={handlePageChange}   />

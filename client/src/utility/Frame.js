@@ -43,9 +43,10 @@ function Frame({onBringData,dataAttributes}) {
     const [checksRes,setChecksRes] = useState(inputsVal);
     const [i,setI] = useState(0);
 
-    const [broughtData,setBroughtData] = useState(new Kelime("hf","bitti"));
+    const [broughtData,setBroughtData] = useState(new Kelime("","bitti"));
+    const [opacity1,setOpacity1] = useState(true);
 
-
+    
     let ref = useRef(null)
 
     function handleButtonClick(e){
@@ -100,7 +101,7 @@ function Frame({onBringData,dataAttributes}) {
            timeOut = setTimeout(()=>{
           
           ref.current.dispatchEvent(mouseDownEvent);
-          setTimeout(()=>{ref.current.dispatchEvent(mouseUpEvent);clicker="ghost";ref.current.click()},300)
+          setTimeout(()=>{ref.current.dispatchEvent(mouseUpEvent);clicker="ghost";ref.current.click()},350)
 
           },space)
           }else{  
@@ -119,8 +120,9 @@ function Frame({onBringData,dataAttributes}) {
           w = broughtData.english;
         }
 
-        setText(w);
 
+        setText(w);
+        setOpacity1(true)
 
         if(clicker === "ghost"){
           speakRepeatedly()
@@ -153,13 +155,14 @@ function Frame({onBringData,dataAttributes}) {
     <div className='frame'>
         
             <div  ref={ref}
-            onMouseUp={(e)=>{e.target.classList.remove("pressed")}}
-            onMouseDown={(e)=>{e.target.classList.add("pressed")}}
+            onMouseUp={(e)=>{e.target.classList.remove("pressed");}}
+            onMouseDown={(e)=>{e.target.classList.add("pressed");setOpacity1(false);}}
             onClick={handleBringClick} className='bring'>Bring</div>
 
             <div 
             {...dataAttributes}
-            value={broughtData.english} onClick={handleDataClick} title={broughtData.turkish} className='data'>
+            value={broughtData.english} onClick={handleDataClick} title={broughtData.turkish}
+             className={`data ${opacity1 ? "opacity-100" : "opacity-0"}`}>
               {checksRes.hide === "false" ? broughtData.english : "?"}
              </div>
 

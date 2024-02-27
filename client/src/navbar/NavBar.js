@@ -9,14 +9,16 @@ import SearchBox from './SearchBox';
 
 
 const inputs = [
-    {key:1,name:"number",to:"/number",text:"NUMBER",active:"",bg:"color-palette2"},
-    {key:2,name:"dictionary",to:"/random",text:"RANDOM",active:"",bg:"color-palette1"},
+    {key:1,name:"number",to:"/number",text:"NUMBER",active:"",bg:"sky-1"},
+    {key:2,name:"dictionary",to:"/random",text:"RANDOM",active:"",bg:"sky-2"},
     {key:3,name:"word",to:"/dictionary",text:"DICTIONARY",active:""}
 ]
 
 const initialVoiceOptions = new Voice(3,1,EngLanguages.UKMale,"true");
 
 const initialFilterOptions = {}
+
+const searchBoxInput = {name:KelimeFields.English}
 
 
 function NavBar() {
@@ -37,6 +39,7 @@ function NavBar() {
      const [searchFilter,setSearchFilter] = useState("");
 
 
+     const [initialSearchVal,setInitialSearchVal] = useState("");
 
 
     const [varPlace,setVarPlace] = useState(null)
@@ -54,6 +57,11 @@ function NavBar() {
 
 
   });
+
+    function setSearchValue(val){
+      setInitialSearchVal(val)
+    }
+
 
   
 
@@ -81,11 +89,6 @@ function NavBar() {
 
     function handleFilterOptions(_filterOptions){
       
-      let toBeDeletedKeys = Object.keys(_filterOptions).filter(key => _filterOptions[key] == FilterWordLevels.All);
-
-      toBeDeletedKeys.forEach(key => {delete _filterOptions[key]})
-
-
       let whereFilter = {where:_filterOptions}
 
       setFilterOptions(whereFilter)
@@ -97,24 +100,29 @@ function NavBar() {
       setSearchFilter({like:searchFilter})
     }
 
+    useEffect(()=>{
+
+      setLinks(prev => {
+
+        return prev.map(i => {
+
+            if(i.to === location.pathname){
+                i.active = "active"
+            }else{
+                i.active = ""
+            }
+
+            return i;
+        
+        })
+
+    })
+
+    },[location.pathname])
 
     function handleClick(e){
 
-        setLinks(prev => {
-
-            return prev.map(i => {
-
-                if(i.name === e.target.getAttribute("name")){
-                    i.active = "active"
-                }else{
-                    i.active = ""
-                }
-
-                return i;
-            
-            })
-
-        })
+        
     }
 
   
@@ -123,8 +131,9 @@ function NavBar() {
     <>
     <nav className="navbar navbar-expand-md bg-dark border-bottom border-body " data-bs-theme="dark">
   <div className="container-fluid">
-    <a style={{fontSize:"26px"}} className="navbar-brand me-4" href="#a">Safa_Eng</a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <Link reloadDocument to={location.pathname}  style={{fontSize:"26px"}} className="navbar-brand me-4" >Safa_Eng</Link>
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
     
@@ -138,14 +147,14 @@ function NavBar() {
          })}
          
           <VoiceOption options={initialVoiceOptions} onOk={handleVoiceOptions} />
-          <FilterOption options={initialFilterOptions} onOk={handleFilterOptions} />
+          <FilterOption options={initialFilterOptions} onOk={handleFilterOptions}  />
 
 
       </ul>
       {varPlace}
       <SearchBox
-        input={{name:KelimeFields.English}}
-        inputVal={""}
+        input={searchBoxInput}
+        inputVal={initialSearchVal}
         onSearch={handleSearch}  />
     </div>
   </div>
@@ -155,7 +164,10 @@ function NavBar() {
 <div className={`feed ${ links.find(i=>i.to===location.pathname).bg } `}>
 
   <Outlet context={{setPlace:setPlace,voiceOptions:voiceOptions,
-  filterOptions:filterOptions,searchFilter:searchFilter}} />
+  filterOptions:filterOptions,searchFilter:searchFilter,
+  setSearchValue:setSearchValue
+ 
+  }} />
 
 </div>
 

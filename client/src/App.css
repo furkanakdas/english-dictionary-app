@@ -6,7 +6,7 @@
 
 .app {
   max-height: 100vh;
-  --navbar-height:60px
+  --navbar-height:90px
 }
 
 .navbar{
@@ -26,7 +26,7 @@
   height: 800px !important;
 }
 
- .frame .input-group{
+ .frame .my-input-group {
   color:rgb(165, 132, 132);
   width: 40%;
   margin-top: 10px;
@@ -70,7 +70,7 @@
   flex: 0.3;
   display: flex;
   justify-content: center;
-
+  color: white;
   align-items: center;
   font-size: 60px;
   font-weight: bold;
@@ -95,11 +95,32 @@ cursor: pointer;
   align-items: center;
   font-size: 60px;
   cursor: pointer;
+  color: white;
 }
 
 .frame .data{
-  font-family:'Courier New', Courier, monospace
+  font-family:'Courier New', Courier, monospace;
+  transition: opacity 0.4s  ease-in-out ;
 }
+
+.search-box{
+  width: 400px;
+}
+
+.search-box .box{
+  width: 250px;
+  height: 50px;
+}
+
+.search-box .my-input-group{
+  flex-wrap: nowrap;
+  gap: 3px;
+}
+
+.search-box input[type="number"]{
+  max-width: 80px;
+}
+
 
 .icon-check{
   cursor: pointer;
@@ -140,20 +161,34 @@ cursor: pointer;
   max-height: calc(100vh - var(--navbar-height));
 }
 
+.feed::-webkit-scrollbar {
+  width: 0px;
+}
 
 
+.sky-1{
+  background-size:cover;
+  
+  background-repeat: no-repeat;
+  
+  background-image: url("../public/images/pexels-pixabay-355465.jpg") ;
+}
 
-.number .input-group .range{
+.sky-2{
+  background-size:cover;
+  
+  background-repeat: no-repeat;
+  
+  background-image: url("../public/images/pexels-photo-440731.jpeg") ;
+}
+
+.number .my-input-group .range{
   margin: 20px 20px;
   margin-left: 20px !important;
   width: 30%;
   font-weight: bold;
   font-size: 22px;
   color: rgb(232, 231, 226);
-}
-
-
-.number .input-group .range input{
 }
 
 .number .range .scale{
@@ -167,29 +202,46 @@ cursor: pointer;
   position: absolute;
 }
 
-.input-group{
+.my-input-group{
   display:flex;
   flex-wrap:wrap;
   justify-content: center;
   gap:10px
 }
 
-.number > .input-group{
+.number > .my-input-group{
     
     gap: 100px;
 }
 
 
-.table input,select{
-  border: 0 !important;
-  outline:0 !important;
-  height: 35px;
-  width: 100%;
-  background-color: transparent;
+
+
+.table td{
+  max-width: 200px;
+  word-wrap: break-word;
 }
 
-.table input,select:hover{
+.table .sound{
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap:4px
+}
+
+
+.table textarea,select{
+  border: 0 !important;
+  outline:0 !important;
+  height: 40px;
+  width: 100% !important;
+  background-color: transparent;
+  resize: none;
+}
+
+.s select{
+  background-color: transparent !important;
+
 }
 
 .table .add-word{

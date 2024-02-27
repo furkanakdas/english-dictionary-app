@@ -4,10 +4,10 @@ import InputGroup from "../../../utility/InputGroup";
 import { useFetch } from "../../../hooks/useFetch";
 import { DictionaryClass, DictionaryFields, Kelime, KelimeFields, WordLevels, WordTypes } from "../../../models";
 import { setText, speak } from "../../../speaker";
+import Select from "../../../utility/inputs/Select";
 
-
-const inputs = [
-    { key: "1",type:"input",inputType: "text", name: KelimeFields.English, label: "English",sound:true },
+const modalInputs = [
+  { key: "1",type:"input",inputType: "text", name: KelimeFields.English, label: "English", },
     { key: "2",type:"input",inputType: "text", name: KelimeFields.Turkish, label: "Turkish" },
     { key: "3",type:"input",inputType: "text", name: KelimeFields.Pronounce, label: "Pronounce", },
     {
@@ -24,7 +24,30 @@ const inputs = [
       label: "Level",
       options: Object.keys(WordLevels).map(key => {return {value:WordLevels[key],text:key}})
     },
+]
+
+const inputs = [
+    { key: "1",type:"div", name: KelimeFields.English,sound:true,trans:true },
+    { key: "2",type:"div", name: KelimeFields.Turkish,trans:true },
+    { key: "3",type:"div", name: KelimeFields.Pronounce,trans:true},
+    {
+      key: "4",
+      type: "select",
+      name: KelimeFields.Type,
+      options: Object.keys(WordTypes).map(key => {return {value:WordTypes[key],text:key}}),
+    },
+    {
+      key: "5",
+      type: "select",
+      name: KelimeFields.Level,
+      options: Object.keys(WordLevels).map(key => {return {value:WordLevels[key],text:key}})
+    },
+    {
+      key:"6",type:"div",name:KelimeFields.CreatedAt,
+    }
   ];
+
+  const tableHeaders = ["English","Turkish","Pronounce","Type","Level","CreatedAt"];
   
   
 const initialAddWordValues = new Kelime("","","",WordTypes.Word,WordLevels.Easy);
@@ -36,18 +59,14 @@ function WordTable({filters}) {
 
     let myFetch = useFetch();
 
-
     useEffect(()=>{
+
 
 
         if(filters){
             getWords()
 
         }
-        
-        
-
-
 
     },[filters])
 
@@ -103,11 +122,19 @@ function WordTable({filters}) {
 
        if(!res.error){
 
+        inputs.forEach(input => {if(input.trans){input.type="div"}})
+
         setWorlds((prev) => {
           
           return prev.map(word => {
             if (word[DictionaryFields.Id] == id){
-              word.copyToThis(res.success.data)
+              word.copyToThis(res.success.data);
+
+              const originalDate = new Date(word[KelimeFields.CreatedAt]);
+              const formattedDate = originalDate.toISOString().split('T')[0];
+
+              word[KelimeFields.CreatedAt] = formattedDate;
+
               word[DictionaryFields.Editable] = "false";
             }
             return word;
@@ -123,6 +150,8 @@ function WordTable({filters}) {
 
   function handleEdit(id){
 
+    inputs.forEach(input => {if(input.trans){input.type="input"}})
+
 
         setWorlds((prev) => {
           return prev.map((i) => {
@@ -135,7 +164,7 @@ function WordTable({filters}) {
       
   }
 
-  function handleWordClick(name,text){
+  function handleWordClick(text){
 
       setText(text);
       speak()
@@ -160,6 +189,8 @@ function WordTable({filters}) {
     
   }
 
+    
+
   async function getWords(){
     let words =await myFetch({method:"get",path:"/word/filter",queryParams:filters})
     
@@ -167,6 +198,12 @@ function WordTable({filters}) {
 
       setWorlds(() => {
         return words.success.data.map((word) => {
+      
+        const originalDate = new Date(word[KelimeFields.CreatedAt]);
+        const formattedDate = originalDate.toISOString().split('T')[0];
+
+        word[KelimeFields.CreatedAt] = formattedDate;
+
           let d = new DictionaryClass();
           d.copyToThis({editable:"false",...word})
           return d;
@@ -185,7 +222,7 @@ function WordTable({filters}) {
       <caption>
         <Modal
           body={<InputGroup resetOnOk={true} onOk={handleOk}
-          inputs={inputs} 
+          inputs={modalInputs} 
           inputsVal={initialAddWordValues}  />}
           id={"modalAddWord"}
           title="Add Word"
@@ -196,8 +233,8 @@ function WordTable({filters}) {
       <thead>
         <tr>
           <th scope="col">#</th>
-          {inputs.map((field) => {
-            return <th scope="col">{field.label}</th>;
+          {tableHeaders.map((header) => {
+            return <th scope="col">{header}</th>;
           })}
         </tr>
       </thead>
@@ -215,32 +252,34 @@ function WordTable({filters}) {
               {inputs.map((field) => {
                 if (field.type == "select") {
                   return (
-                    <td>
-                      <select
-                        onChange={(e) => {
+                    <td className="s">
+                    <Select
+                      onChange={(e) => {
                           handleInputChange(e, word[DictionaryFields.Id]);
                         }}
-                        value={word[field.name]}
-                        name={field.name}
-                      >
-                        {field.options.map((option) => (
-                          <option value={option.value}>{option.text}</option>
-                        ))}
-                      </select>
+                      input={field}
+                      inputVal={word[field.name]}
+                     />
+                      
                     </td>
                   );
                 } else {
-                  return (
+
+                  if(field.type == "div"){
+                   return <td >
+                      <div className={field.sound && "sound"} onClick={()=>{
+                        if(field.sound && word[DictionaryFields.Editable] == "false"){
+                          handleWordClick(word[field.name]);
+                        }
+                      }}>
+                      {word[field.name]}
+                      {field.sound && <i style={{fontSize:"23px"}} className="bi bi-volume-down"></i>}
+                      </div>
+                    </td>
+                  }else{
+                    return (
                     <td>
-                      <input
-                        onClick={() => {
-                          if (
-                            field.sound &&
-                            word[DictionaryFields.Editable] == "false"
-                          ) {
-                            handleWordClick(field.name, word[field.name]);
-                          }
-                        }}
+                      <textarea
                         onChange={(e) => {
                           handleInputChange(e, word[DictionaryFields.Id]);
                         }}
@@ -249,8 +288,23 @@ function WordTable({filters}) {
                       />
                     </td>
                   );
+                  }
+
+                  
                 }
               })}
+
+
+
+
+
+
+
+
+
+
+
+
 
               <td>
                 {word[DictionaryFields.Editable] === "true" ? (

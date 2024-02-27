@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from '../utility/Modal'
 import InputGroup from '../utility/InputGroup'
 import {  FilterFields, FilterWordLevels, FilterWordTypes} from '../models'
@@ -15,20 +15,43 @@ let inputs = [
 
 function FilterOption({onOk,options}) {
 
+  const [active,setActive] = useState(()=>{
+    if(Object.keys(options).length == 0)
+      return false;
+    else
+      return true;
+  });
+
+
+  
+
   return (
     <Modal
          id={"modalFilterOptions"}
          title='Filter' 
          body={<InputGroup autoOk={true} inputsVal={options} 
          inputs={inputs}
-          onOk={(opts)=>{
-            
-            onOk(opts)
+          onOk={(_filterOptions)=>{
+
+
+          let toBeDeletedKeys = Object.keys(_filterOptions).filter(key => _filterOptions[key] == FilterWordLevels.All);
+
+          toBeDeletedKeys.forEach(key => {delete _filterOptions[key]})
+ 
+            setActive((prev)=>{
+              if(Object.keys(_filterOptions).length == 0)
+                return false;
+              else
+                return true
+            })
+
+
+            onOk(_filterOptions)
             
             }}  />}
          trigger={
           <li style={{marginLeft:"20px"}} className='nav-item point'>
-            <i style={{fontSize:"19px"}} className="bi bi-funnel-fill nav-link"></i>
+            <i style={{fontSize:"19px"}} className={`bi bi-funnel-fill nav-link ${active && "active"}`}></i>
          </li>
          }
 

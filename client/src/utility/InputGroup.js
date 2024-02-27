@@ -51,7 +51,7 @@ function InputGroup({inputs,inputsVal,onOk=()=>{},resetOnOk = false,autoOk=false
     }
     
     return (
-    <div className={"input-group "} >
+    <div className="my-input-group " >
     
     
         {inputs && inputs.map(input =>{
