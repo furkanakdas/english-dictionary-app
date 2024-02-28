@@ -4,11 +4,15 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { Word } from "./models/Word.js";
-import path from "path"
+import {dirname} from "path"
+import path from "path";
 import { parse } from 'csv-parse';
 import fs, { truncate } from "fs"
+import { fileURLToPath } from "url";
 
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const app = express();
 dotenv.config();
@@ -19,43 +23,17 @@ app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(express.static(path.join(__dirname,"/client/build")));
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 try{
 
   await mongoose
-  .connect(process.env.CONNECTION_URL, {
+  .connect(process.env.CONNECTION_URL || "mongodb+srv://furako28:ym5wS3ouRncSQIKA@cluster0.es6o67l.mongodb.net/", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
 
-  // const dosyaYolu = './test.csv';
-
-  // fs.createReadStream(dosyaYolu)
-  // .pipe(parse({
-  //   delimiter: ',',
-  //   quote: '"',
-  //   headers: true,
-  //   columns:["","eng","tr","telaffuz","Derece","Tek"]
-  // }))
-  // .on('data',async (satir) => {
-
-  //   let type;
-
-  //   if(satir.Derece.toString() == "deyim"){
-  //     type = "expression";
-  //   }else{
-  //     type="word"
-  //   }
-    
-  //   let o = {english:satir.eng,turkish:satir.tr,pronounce:satir.telaffuz,type:type}
-  //   await Word.create(o);
-  // })
-  // .on('end', () => {
-  //   console.log('CSV dosyası okuma tamamlandı');
-  // });
-
-
+  
 }catch(e){
   console.log(e)
 }
@@ -72,9 +50,7 @@ function isJsonStructure(variable) {
 }
 
 app.use("/",(req,res,next)=>{
-
-  console.log("as");
-
+  console.log('w');
   next();
 })
 
@@ -148,7 +124,7 @@ app.get("/word/filter",async (req,res)=>{
 
   try {
 
-      let words = await req.myQuery.sort({createdAt:1}).exec();
+      let words = await req.myQuery.sort({createdAt:-1}).exec();
        res.json({success:{message:"All Words",data:words}});
     
 
@@ -248,6 +224,69 @@ app.listen(port, () => {
     // await Word.create({english:"salt",turkish:"tuz",pronounce:"salt",type:0,level:1})
     // await Word.create({english:"you",turkish:"sen",pronounce:"yu",type:0,level:0})
 
+
+    // const dosyaYolu = './test.csv';
+
+  // fs.createReadStream(dosyaYolu)
+  // .pipe(parse({
+  //   delimiter: ',',
+  //   quote: '"',
+  //   headers: true,
+  //   columns:["","eng","tr","telaffuz","Derece","Tek"]
+  // }))
+  // .on('data',async (satir) => {
+
+  //   let type;
+
+  //   if(satir.Derece.toString() == "deyim"){
+  //     type = "expression";
+  //   }else{
+  //     type="word"
+  //   }
+    
+  //   let o = {english:satir.eng,turkish:satir.tr,pronounce:satir.telaffuz,type:type}
+  //   await Word.create(o);
+  // })
+  // .on('end', () => {
+  //   console.log('CSV dosyası okuma tamamlandı');
+  // });
+
+ // Dosya yolunu belirtin
+//  const dosyaYolu = './safa_learned_words.txt';
+
+//  // Dosyayı okuyun
+//  fs.readFile(dosyaYolu, 'utf8', (err, data) => {
+//      if (err) {
+//          console.error('Dosya okunurken bir hata oluştu:', err);
+//          return;
+//      }
+     
+//      // Satırlara ayırın
+//      const satirlar = data.split('\n');
+ 
+//      // Her satırı işleyin
+//      satirlar.forEach(async (satir, index) => {
+//          // Satırı virgüllerle ayırın
+ 
+//          let pattern = /"([\w\W]*)","([\w\W]*)","([\w\W]*)","([\w\W]*)","([\w\W]*)/
+ 
+//          let match = pattern.exec(satir);
+ 
+//          if(match){
+//            if(match[4] == "deyim"){
+ 
+//             await Word.create({english:match[1],turkish:match[2],pronounce:match[3],type:"expression"})
+ 
+//            }else{
+//              await Word.create({english:match[1],turkish:match[2],pronounce:match[3]})
+//            }
+//          }
+ 
+         
+ 
+//          // İşlenmiş veriyi gösterin (örneğin, konsola yazdırın)
+//      });
+//  });
 
 
 

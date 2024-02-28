@@ -53,19 +53,23 @@ export class Kelime{
 
 export const DictionaryFields = Object.freeze({
    Editable:"editable",
+   ShowDate:"showDate",
    ...KelimeFields
 })
 
 export class DictionaryClass extends Kelime {
 
-  constructor(english,turkish,pronounce,type,level,_id,createdAt,view,editable){
+  constructor(english,turkish,pronounce,type,level,_id,createdAt,view,editable,showDate){
     super(english,turkish,pronounce,type,level,_id,createdAt,view)
     this.editable = editable;
+    this.showDate=showDate;
   }
 
-  copyToThis({english,turkish,pronounce,type,level,_id,createdAt,view,editable}){
+  copyToThis({english,turkish,pronounce,type,level,_id,createdAt,view,editable,showDate}){
     super.copyToThis({english,turkish,pronounce,type,level,_id,createdAt,view});
     this.editable = editable;
+    this.showDate=showDate;
+
   }
 
 }

@@ -6,7 +6,7 @@
 
 .app {
   max-height: 100vh;
-  --navbar-height:90px
+  --navbar-height:60px
 }
 
 .navbar{
@@ -55,6 +55,7 @@
   background: linear-gradient(45deg, rgb(99, 227, 193), rgb(176, 160, 160));
   transition: box-shadow 0.3s ease; /* Geçiş efekti */
   flex: 2;
+  max-height: 50px;
 }
 
 .number .frame .bring{
@@ -117,10 +118,6 @@ cursor: pointer;
   gap: 3px;
 }
 
-.search-box input[type="number"]{
-  max-width: 80px;
-}
-
 
 .icon-check{
   cursor: pointer;
@@ -171,7 +168,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  /* background-image: url("../public/images/pexels-pixabay-355465.jpg") ; */
+  background-image: url("../public/images/pexels-pixabay-355465.jpg") ;
 }
 
 .sky-2{
@@ -179,7 +176,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  /* background-image: url("../public/images/pexels-photo-440731.jpeg") ; */
+  background-image: url("../public/images/pexels-photo-440731.jpeg") ;
 }
 
 .number .my-input-group .range{

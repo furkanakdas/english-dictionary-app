@@ -5,6 +5,7 @@ import { useFetch } from "../../../hooks/useFetch";
 import { DictionaryClass, DictionaryFields, Kelime, KelimeFields, WordLevels, WordTypes } from "../../../models";
 import { setText, speak } from "../../../speaker";
 import Select from "../../../utility/inputs/Select";
+import Spinner from "../../../utility/inputs/Spinner";
 
 const modalInputs = [
   { key: "1",type:"input",inputType: "text", name: KelimeFields.English, label: "English", },
@@ -43,7 +44,7 @@ const inputs = [
       options: Object.keys(WordLevels).map(key => {return {value:WordLevels[key],text:key}})
     },
     {
-      key:"6",type:"div",name:KelimeFields.CreatedAt,
+      key:"6",type:"div",name:DictionaryFields.ShowDate,
     }
   ];
 
@@ -60,14 +61,9 @@ function WordTable({filters}) {
     let myFetch = useFetch();
 
     useEffect(()=>{
-
-
-
         if(filters){
             getWords()
-
         }
-
     },[filters])
 
 
@@ -75,16 +71,7 @@ function WordTable({filters}) {
         let res =  await myFetch({method:"post",path:"/word",body:data});
     
         if(!res.error){
-          setWorlds((prev) => {
-    
-            let newKelime = new DictionaryClass();
-    
-            newKelime.copyToThis({editable:"false",...res.success.data})
-    
-            prev.push(newKelime);
-      
-            return [...prev];
-          });
+          getWords();
         }else{
           console.log(res.error);
         }
@@ -99,9 +86,7 @@ function WordTable({filters}) {
         let res = await myFetch({method:"delete",path:`/word/${id}`})
 
         if(!res.error){
-          setWorlds((prev) => {
-            return prev.filter((i) => i[DictionaryFields.Id] != id);
-          });
+          getWords()
         }else{
           console.log(res.error);
         }
@@ -124,23 +109,7 @@ function WordTable({filters}) {
 
         inputs.forEach(input => {if(input.trans){input.type="div"}})
 
-        setWorlds((prev) => {
-          
-          return prev.map(word => {
-            if (word[DictionaryFields.Id] == id){
-              word.copyToThis(res.success.data);
-
-              const originalDate = new Date(word[KelimeFields.CreatedAt]);
-              const formattedDate = originalDate.toISOString().split('T')[0];
-
-              word[KelimeFields.CreatedAt] = formattedDate;
-
-              word[DictionaryFields.Editable] = "false";
-            }
-            return word;
-          })
-
-        });
+        getWords();
 
        }else{
         console.log(res.error);
@@ -202,7 +171,7 @@ function WordTable({filters}) {
         const originalDate = new Date(word[KelimeFields.CreatedAt]);
         const formattedDate = originalDate.toISOString().split('T')[0];
 
-        word[KelimeFields.CreatedAt] = formattedDate;
+        word[DictionaryFields.ShowDate] = formattedDate;
 
           let d = new DictionaryClass();
           d.copyToThis({editable:"false",...word})
@@ -217,7 +186,7 @@ function WordTable({filters}) {
 
 
 
-  return (
+  return !words ? <Spinner /> : (
     <table className="table table-hover table table-striped caption-top">
       <caption>
         <Modal

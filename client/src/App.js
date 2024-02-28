@@ -44,7 +44,7 @@ function App() {
 
          <Routes>
          
-          <Route path='/' element={<Navigate to={"/number"} />} />
+          <Route path='/' element={<Navigate  to={"/number"} />} />
 
           <Route element={<NavBar />} >
 

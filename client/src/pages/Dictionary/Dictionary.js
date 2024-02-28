@@ -23,6 +23,15 @@ function Dictionary() {
 
   const [filters,setFilters] = useState();
 
+  
+
+
+  function handlePageChange(pageFilter){
+
+    setFilters({...pageFilter,...outletContext.filterOptions,...outletContext.searchFilter});
+
+  }
+
   useEffect(() => {
 
 
@@ -32,14 +41,6 @@ function Dictionary() {
       </>
     );
   }, []);
-
-
-  function handlePageChange(pageFilter){
-
-    setFilters({...pageFilter,...outletContext.filterOptions,...outletContext.searchFilter});
-
-  }
-
 
   return (
     <div>

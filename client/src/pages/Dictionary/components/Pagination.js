@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useFetch } from "../../../hooks/useFetch";
 import { useOutletContext } from "react-router-dom";
 
 let friendsNum = 5;
 const wordPerPage = 50;
 
 function Pagination({ onPageChange }) {
-  let myFetch = useFetch();
+
   let outletContext = useOutletContext();
   const [currPage, setCurrPage] = useState(0);
   const [pages, setPages] = useState(() => []);

@@ -2,10 +2,9 @@
 
 
 
-export const url =  "";
+// export const url =  "";
 
-// export const url =  "http://localhost:3001";
-let a = 2;
+export const url =  "http://localhost:3001";
 
 // let requestOwners = []
 
