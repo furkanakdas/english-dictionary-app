@@ -7,8 +7,8 @@ import { Kelime } from '../models';
 
 
 let inputs = [
-  {key:0,name:"min",type:"range",label:"Min"},
-  {key:1,name:"max",type:"range",label:"Max"},
+  {key:0,name:"min",type:"range",label:"Min",min:"0",max:"6"},
+  {key:1,name:"max",type:"range",label:"Max",min:"0",max:"6"},
 ]
 
 let initialInputsVal = {min:"0",max:"1"}

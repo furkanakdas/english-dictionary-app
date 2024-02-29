@@ -27,7 +27,7 @@
 }
 
  .frame .my-input-group {
-  color:rgb(165, 132, 132);
+  color:rgb(56, 44, 44);
   width: 40%;
   margin-top: 10px;
 }
@@ -104,19 +104,6 @@ cursor: pointer;
   transition: opacity 0.4s  ease-in-out ;
 }
 
-.search-box{
-  width: 400px;
-}
-
-.search-box .box{
-  width: 250px;
-  height: 50px;
-}
-
-.search-box .my-input-group{
-  flex-wrap: nowrap;
-  gap: 3px;
-}
 
 
 .icon-check{
@@ -158,9 +145,9 @@ cursor: pointer;
   max-height: calc(100vh - var(--navbar-height));
 }
 
-.feed::-webkit-scrollbar {
-  width: 0px;
-}
+/* .feed::-webkit-scrollbar {
+  width: 14px;
+} */
 
 
 .sky-1{
@@ -168,7 +155,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  background-image: url("../public/images/pexels-pixabay-355465.jpg") ;
+  background-image: url("../public/images/pexels-krivec-ales-580151.jpg") ;
 }
 
 .sky-2{
@@ -185,7 +172,7 @@ cursor: pointer;
   width: 30%;
   font-weight: bold;
   font-size: 22px;
-  color: rgb(232, 231, 226);
+  color: rgb(85, 179, 66);
 }
 
 .number .range .scale{
@@ -241,6 +228,30 @@ cursor: pointer;
 
 }
 
-.table .add-word{
-  
+caption{
+}
+
+table thead{
+  position: sticky;
+  top: 0px;
+}
+
+.table-container{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-end;
+}
+
+.table-container .modal-trigger {
+  position: sticky;
+  top: 10px;
+  left: 0;
+
+  width: 200px !important;
+  z-index: 99;
+}
+
+
+.letter-range .range{
+  flex: 1;
 }

@@ -6,6 +6,7 @@ import { DictionaryClass, DictionaryFields, Kelime, KelimeFields, WordLevels, Wo
 import { setText, speak } from "../../../speaker";
 import Select from "../../../utility/inputs/Select";
 import Spinner from "../../../utility/inputs/Spinner";
+import { useOutletContext } from "react-router-dom";
 
 const modalInputs = [
   { key: "1",type:"input",inputType: "text", name: KelimeFields.English, label: "English", },
@@ -51,20 +52,24 @@ const inputs = [
   const tableHeaders = ["English","Turkish","Pronounce","Type","Level","CreatedAt"];
   
   
-const initialAddWordValues = new Kelime("","","",WordTypes.Word,WordLevels.Easy);
+const initialAddWordValues = new Kelime("","","",WordTypes.Word,WordLevels.Hard);
 
 
-function WordTable({filters}) {
+function WordTable({filters,pageFilter}) {
 
     const [words, setWorlds] = useState();
+
+    let outletContext = useOutletContext();
+
 
     let myFetch = useFetch();
 
     useEffect(()=>{
-        if(filters){
+
+        if(filters && pageFilter){
             getWords()
         }
-    },[filters])
+    },[filters,pageFilter])
 
 
     async function handleOk(data){
@@ -161,8 +166,10 @@ function WordTable({filters}) {
     
 
   async function getWords(){
-    let words =await myFetch({method:"get",path:"/word/filter",queryParams:filters})
+    let words =await myFetch({method:"get",path:"/word/filter",queryParams:{...filters,...pageFilter}})
     
+  
+
     if(!words.error){
 
       setWorlds(() => {
@@ -184,21 +191,28 @@ function WordTable({filters}) {
     }
   }
 
+  // useEffect(()=>{
+
+  //   outletContext.setPlace((prev)=>{
+  //   return  [...prev,<>
+        
+  //     </>]
+  //   })
+
+  // },[filters,pageFilter])
 
 
-  return !words ? <Spinner /> : (
+  return !words ? <Spinner /> : <div className="table-container"> 
+    <Modal
+            body={<InputGroup resetOnOk={true} onOk={handleOk}
+            inputs={modalInputs} 
+            inputsVal={initialAddWordValues}  />}
+            id={"modalAddWord"}
+            title="Add Word"
+            trigger={<div  className="fw-bold btn btn-primary add-word">Add Word +</div>}
+          />
     <table className="table table-hover table table-striped caption-top">
-      <caption>
-        <Modal
-          body={<InputGroup resetOnOk={true} onOk={handleOk}
-          inputs={modalInputs} 
-          inputsVal={initialAddWordValues}  />}
-          id={"modalAddWord"}
-          title="Add Word"
-          trigger={<div  className="fw-bold btn btn-secondary add-word">Add Word +</div>}
-        />
-      </caption>
-
+      
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -216,7 +230,8 @@ function WordTable({filters}) {
               }`}
               key={word[DictionaryFields.Id]}
             >
-              <th scope="row">{index + 1 + filters.skip}</th>
+            
+              <th scope="row">{index + 1 + pageFilter.skip}</th>
 
               {inputs.map((field) => {
                 if (field.type == "select") {
@@ -258,8 +273,6 @@ function WordTable({filters}) {
                     </td>
                   );
                   }
-
-                  
                 }
               })}
 
@@ -309,7 +322,7 @@ function WordTable({filters}) {
           ))}
       </tbody>
     </table>
-  );
+    </div>;
 }
 
 export default WordTable;

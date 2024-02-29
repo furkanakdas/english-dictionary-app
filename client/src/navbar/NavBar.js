@@ -5,7 +5,7 @@ import {  setRate, setVoice, turnOffVolume, turnOnVolume } from '../speaker';
 import VoiceOption from './VoiceOption';
 import FilterOption from './FilterOption';
 import { useFetch } from '../hooks/useFetch';
-import SearchBox from './SearchBox';
+import SearchBox from '../pages/Dictionary/components/SearchBox';
 
 
 const inputs = [
@@ -14,11 +14,10 @@ const inputs = [
     {key:3,name:"word",to:"/dictionary",text:"DICTIONARY",active:""}
 ]
 
-const initialVoiceOptions = new Voice(3,1,EngLanguages.UKMale,"true");
+const initialVoiceOptions = new Voice(3,1,EngLanguages.USFemale,"true");
 
 const initialFilterOptions = {}
 
-const searchBoxInput = {name:KelimeFields.English}
 
 
 function NavBar() {
@@ -36,12 +35,6 @@ function NavBar() {
     const [filterOptions,setFilterOptions] =
      useState(initialFilterOptions);
 
-     const [searchFilter,setSearchFilter] = useState("");
-
-
-     const [initialSearchVal,setInitialSearchVal] = useState("");
-
-
     const [varPlace,setVarPlace] = useState(null)
 
     const [links,setLinks] = useState(()=>{
@@ -57,13 +50,6 @@ function NavBar() {
 
 
   });
-
-    function setSearchValue(val){
-      setInitialSearchVal(val)
-    }
-
-
-  
 
     function setPlace(place){
         setVarPlace(place)
@@ -93,11 +79,6 @@ function NavBar() {
 
       setFilterOptions(whereFilter)
 
-    }
-
-    function handleSearch(searchFilter){
-
-      setSearchFilter({like:searchFilter})
     }
 
     useEffect(()=>{
@@ -152,10 +133,7 @@ function NavBar() {
 
       </ul>
       {varPlace}
-      <SearchBox
-        input={searchBoxInput}
-        inputVal={initialSearchVal}
-        onSearch={handleSearch}  />
+      
     </div>
   </div>
 </nav>
@@ -164,8 +142,7 @@ function NavBar() {
 <div className={`feed ${ links.find(i=>i.to===location.pathname).bg } `}>
 
   <Outlet context={{setPlace:setPlace,voiceOptions:voiceOptions,
-  filterOptions:filterOptions,searchFilter:searchFilter,
-  setSearchValue:setSearchValue
+  filterOptions:filterOptions
  
   }} />
 

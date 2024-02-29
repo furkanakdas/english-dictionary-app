@@ -6,63 +6,33 @@ import Number from './pages/Number';
 import "./speaker.js"
 import NavBar from './navbar/NavBar.js';
 import { useEffect, useRef, useState } from 'react';
-import DicRan from './pages/DicRan.js';
+import Range from './utility/inputs/Range.js';
 
 
 
 
 function App() {
 
-  const [a,b] = useState();
-  const [c,d] = useState();
-  const [e,f] = useState();
-
-  // useEffect(()=>{
-  //   alert("1")
-
-  //   f(33);
-  //   f(44);
-  //   d(2);
-  // },[a])
-
-  // useEffect(()=>{
-  //   alert("2")
-
-  // },[c])
-
-  // useEffect(()=>{
-  //   alert(e)
-  // },[e])
-
   let location = useLocation();
 
- 
- 
+  
+  
   return (
-    <div className="app">    
+    <div className="app">
 
 
-         <Routes>
-         
-          <Route path='/' element={<Navigate  to={"/number"} />} />
 
-          <Route element={<NavBar />} >
+      <Routes>
+        <Route path="/" element={<Navigate to={"/number"} />} />
 
-            <Route path='/number' element={<Number />} />
+        <Route element={<NavBar />}>
+          <Route path="/number" element={<Number />} />
 
-            <Route element={<DicRan />}>
-              <Route path='/random' element={<Random />} />
-              <Route path='/dictionary' element={<Dictionary />} />
-            </Route>
-            
-
-          </Route>
-
-
-        </Routes> 
-
-
-   </div>
+          <Route path="/random" element={<Random />} />
+          <Route path="/dictionary" element={<Dictionary />} />
+        </Route>
+      </Routes>
+    </div>
   );
 }
 

@@ -1,94 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
-let friendsNum = 5;
-const wordPerPage = 50;
 
-function Pagination({ onPageChange }) {
 
-  let outletContext = useOutletContext();
-  const [currPage, setCurrPage] = useState(0);
-  const [pages, setPages] = useState(() => []);
-  const [pageCount, setPageCount] = useState(0);
+function Pagination({ onPageChange,pageCount,friendsNum,wordPerPage,currPage }) {
+
+    const [pages, setPages] = useState(() => []);
+
+    //const [currPage, setCurrPage] = useState(currentPage);
+
+    useEffect(() => {
+        let array = [];
+
+        for (let i = 0; i < pageCount; i++) {
+          let element = ".";
+    
+          if (i == 0) element = "li";
+    
+          if (i == pageCount - 1) element = "li";
+    
+          if (i + 1 >= currPage - friendsNum && i + 1 <= currPage + friendsNum)
+            element = "li";
+    
+          if (element == ".") {
+            if (array[i - 1] == "." || array[i - 1] == "empty") element = "empty";
+          }
+
+          array.push(element);
+        }
+
+            
+        setPages(array)
+    
+      },[currPage,pageCount]) 
   
-  function createArray() {
-    let array = [];
-    console.log(pageCount + "2");
 
-    for (let i = 0; i < pageCount; i++) {
-      let element = ".";
-
-      if (i == 0) element = "li";
-
-      if (i == pageCount - 1) element = "li";
-
-      if (i + 1 >= currPage - friendsNum && i + 1 <= currPage + friendsNum)
-        element = "li";
-
-      if (element == ".") {
-        if (array[i - 1] == "." || array[i - 1] == "empty") element = "empty";
-      }
-
-      array.push(element);
-    }
-
-    return array;
-  }
-
-  useEffect(() => {
-    let array = createArray();
-    setPages(array);
-
-    if (currPage > 0) {
-      let filter = {
-        ...{ skip: (currPage - 1) * wordPerPage, limit: wordPerPage },
-      };
-
-      onPageChange(filter);
-    }
-  }, [currPage, pageCount]);
-
-  useEffect(() => {
-
-    setPageCount(Math.ceil(outletContext.wordCount / wordPerPage));
-
-    if (outletContext.wordCount > 0) {
-
-      if(currPage != 1){
-        setCurrPage(1)
-      }else{
-        let filter = {
-          ...{ skip: 0, limit: wordPerPage },
-        };
-        onPageChange(filter)
-      }
-
-
-    }else {
-      setCurrPage(0)
-    };
-
-
-
-  }, [
-    outletContext.wordCount,
-    outletContext.filterOptions,
-    outletContext.searchFilter,
-  ]);
-
-
-  return (
+return (
     <nav aria-label="...">
       <ul className="pagination d-flex">
         <li style={{ flex: 1 }} className="page-item ">
           <a
             onClick={() => {
-              setCurrPage(currPage - 1);
+              //setCurrPage(currPage - 1);
+              onPageChange(currPage-1)
             }}
             className={`fw-bold text-center page-link ${
               currPage <= 1 && "disabled"
             } `}
-            href="#"
+            
           >
             Previous
           </a>
@@ -103,7 +62,8 @@ function Pagination({ onPageChange }) {
                     i + 1 == currPage && "active"
                   }`}
                   onClick={() => {
-                    setCurrPage(i + 1);
+                    // setCurrPage(i + 1);
+                    onPageChange(i + 1);
                   }}
                   href="#"
                 >
@@ -125,7 +85,9 @@ function Pagination({ onPageChange }) {
         <li style={{ flex: 1 }} className="page-item">
           <a
             onClick={() => {
-              setCurrPage(currPage + 1);
+            //   setCurrPage(currPage + 1);
+            onPageChange(currPage+1)
+
             }}
             className={`fw-bold text-center page-link ${
               currPage >= pages.length && "disabled"
@@ -137,7 +99,8 @@ function Pagination({ onPageChange }) {
         </li>
       </ul>
     </nav>
-  );
+)
+  
 }
 
 export default Pagination;

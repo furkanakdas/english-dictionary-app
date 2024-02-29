@@ -3,7 +3,7 @@ import React from "react";
 function Modal({ title = "Title", body, trigger, id,className }) {
   return (
     <>
-      <div data-bs-toggle="modal" data-bs-target={`#${id}`}>
+      <div className="modal-trigger" data-bs-toggle="modal" data-bs-target={`#${id}`}>
         {trigger}
       </div>
 
