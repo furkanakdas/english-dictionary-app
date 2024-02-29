@@ -27,7 +27,7 @@
 }
 
  .frame .my-input-group {
-  color:rgb(56, 44, 44);
+  color:rgb(241, 232, 232);
   width: 40%;
   margin-top: 10px;
 }
@@ -63,6 +63,11 @@
 
 }
 
+.number .frame .data{
+  color: rgb(90, 81, 81);
+
+}
+
 .frame .data{
   
   width: auto;
@@ -71,7 +76,7 @@
   flex: 0.3;
   display: flex;
   justify-content: center;
-  color: white;
+  color: rgb(255, 255, 255);
   align-items: center;
   font-size: 60px;
   font-weight: bold;
@@ -123,21 +128,21 @@ cursor: pointer;
   cursor: pointer;
 }
 
+
+.pagination{
+  position:fixed;
+  top: calc(100vh - 37px);
+  display: flex;
+  width: 100%;
+  margin: 0;
+}
+
 .page{
   
 }
 
 .number{
 }
-
-.feed.color-palette1{
-  background-image: linear-gradient(180deg, #acb7ae, #82716e,#e4decd,#c2b490) !important;
-}
-
-.feed.color-palette2{
-  background-image: linear-gradient(0deg, #f3d887, #d4d4dc,#393f4d,#1d1e22) !important;
-}
-
 
 .feed{
   overflow-y: scroll;
@@ -155,7 +160,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  background-image: url("../public/images/pexels-krivec-ales-580151.jpg") ;
+  background-image: url("../public/images/pexels-brett-sayles-4388477.jpg") ;
 }
 
 .sky-2{
@@ -163,16 +168,16 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  background-image: url("../public/images/pexels-photo-440731.jpeg") ;
+  background-image: url("../public/images/pexels-brett-sayles-4455019.jpg") ;
 }
 
 .number .my-input-group .range{
-  margin: 20px 20px;
+  margin: 8px 20px;
   margin-left: 20px !important;
   width: 30%;
   font-weight: bold;
   font-size: 22px;
-  color: rgb(85, 179, 66);
+  color: rgb(227, 235, 239);
 }
 
 .number .range .scale{
@@ -201,16 +206,19 @@ cursor: pointer;
 
 
 
-.table td{
+.table div{
   max-width: 200px;
   word-wrap: break-word;
 }
 
 .table .sound{
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap:4px
+  gap:4px;
+}
+
+.table .sound i{
+  position: relative;
+  top: 4px;
 }
 
 
@@ -236,21 +244,9 @@ table thead{
   top: 0px;
 }
 
-.table-container{
-  display: flex;
-  flex-direction: column;
-  align-items:flex-end;
+.add-word:hover{
+  color: white !important;
 }
-
-.table-container .modal-trigger {
-  position: sticky;
-  top: 10px;
-  left: 0;
-
-  width: 200px !important;
-  z-index: 99;
-}
-
 
 .letter-range .range{
   flex: 1;

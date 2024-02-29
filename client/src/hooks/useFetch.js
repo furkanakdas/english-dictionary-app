@@ -2,9 +2,9 @@
 
 
 
-// export const url =  "";
+export const url =  "";
 
-export const url =  "http://localhost:3001";
+// export const url =  "http://localhost:3001";
 
 // let requestOwners = []
 
@@ -38,13 +38,13 @@ export function useFetch(){
 
                 fullUrl.slice(0,-1);
 
-                console.log(fullUrl);
 
                 // fullUrl = new URL(url + path);
 
                 // fullUrl.search = new URLSearchParams(queryParams).toString();
             }
 
+            console.log(fullUrl);
 
             body = JSON.stringify(body)
 

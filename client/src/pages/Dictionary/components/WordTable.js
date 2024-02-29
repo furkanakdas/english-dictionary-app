@@ -29,18 +29,20 @@ const modalInputs = [
 ]
 
 const inputs = [
-    { key: "1",type:"div", name: KelimeFields.English,sound:true,trans:true },
-    { key: "2",type:"div", name: KelimeFields.Turkish,trans:true },
-    { key: "3",type:"div", name: KelimeFields.Pronounce,trans:true},
+    { key: "1",type:"div",editType:"input", name: KelimeFields.English,sound:true },
+    { key: "2",type:"div",editType:"input", name: KelimeFields.Turkish },
+    { key: "3",type:"div",editType:"input", name: KelimeFields.Pronounce},
     {
       key: "4",
-      type: "select",
+      type: "div",
+      editType:"select",
       name: KelimeFields.Type,
       options: Object.keys(WordTypes).map(key => {return {value:WordTypes[key],text:key}}),
     },
     {
       key: "5",
-      type: "select",
+      type: "div",
+      editType:"select",
       name: KelimeFields.Level,
       options: Object.keys(WordLevels).map(key => {return {value:WordLevels[key],text:key}})
     },
@@ -55,7 +57,7 @@ const inputs = [
 const initialAddWordValues = new Kelime("","","",WordTypes.Word,WordLevels.Hard);
 
 
-function WordTable({filters,pageFilter}) {
+function WordTable({filters,pageFilter,setPlace}) {
 
     const [words, setWorlds] = useState();
 
@@ -112,7 +114,7 @@ function WordTable({filters,pageFilter}) {
 
        if(!res.error){
 
-        inputs.forEach(input => {if(input.trans){input.type="div"}})
+        inputs.forEach(input => {if(input.type){input.type="div"}})
 
         getWords();
 
@@ -124,7 +126,7 @@ function WordTable({filters,pageFilter}) {
 
   function handleEdit(id){
 
-    inputs.forEach(input => {if(input.trans){input.type="input"}})
+    inputs.forEach(input => {if(input.editType){input.type=input.editType}})
 
 
         setWorlds((prev) => {
@@ -201,27 +203,33 @@ function WordTable({filters,pageFilter}) {
 
   // },[filters,pageFilter])
 
+  useEffect(()=>{
 
-  return !words ? <Spinner /> : <div className="table-container"> 
-    <Modal
-            body={<InputGroup resetOnOk={true} onOk={handleOk}
-            inputs={modalInputs} 
-            inputsVal={initialAddWordValues}  />}
-            id={"modalAddWord"}
-            title="Add Word"
-            trigger={<div  className="fw-bold btn btn-primary add-word">Add Word +</div>}
-          />
-    <table className="table table-hover table table-striped caption-top">
+      setPlace(<Modal
+        body={<InputGroup resetOnOk={true} onOk={handleOk}
+        inputs={modalInputs} 
+        inputsVal={initialAddWordValues}  />}
+        id={"modalAddWord"}
+        title="Add Word"
+        trigger={<div  className="fw-bold btn  add-word">Add Word +</div>}
+      />)
+
+  },[])
+
+
+  return !words ? <Spinner /> :  
+    
+    <table  className="table table-hover table table-striped caption-top">
       
       <thead>
-        <tr>
+        <tr >
           <th scope="col">#</th>
           {tableHeaders.map((header) => {
             return <th scope="col">{header}</th>;
           })}
         </tr>
       </thead>
-      <tbody className="table-group-divider">
+      <tbody className="table-group-divider" >
         {words &&
           words.map((word, index) => (
             <tr
@@ -322,7 +330,7 @@ function WordTable({filters,pageFilter}) {
           ))}
       </tbody>
     </table>
-    </div>;
+   
 }
 
 export default WordTable;

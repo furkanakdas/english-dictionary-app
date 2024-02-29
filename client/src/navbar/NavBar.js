@@ -10,11 +10,11 @@ import SearchBox from '../pages/Dictionary/components/SearchBox';
 
 const inputs = [
     {key:1,name:"number",to:"/number",text:"NUMBER",active:"",bg:"sky-1"},
-    {key:2,name:"dictionary",to:"/random",text:"RANDOM",active:"",bg:"sky-2"},
+    {key:2,name:"dictionary",to:"/random",text:"WORD",active:"",bg:"sky-2"},
     {key:3,name:"word",to:"/dictionary",text:"DICTIONARY",active:""}
 ]
 
-const initialVoiceOptions = new Voice(3,1,EngLanguages.USFemale,"true");
+const initialVoiceOptions = new Voice(2,1,EngLanguages.USFemale,"true");
 
 const initialFilterOptions = {}
 

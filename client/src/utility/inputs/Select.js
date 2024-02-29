@@ -4,7 +4,7 @@ function Select({onChange, input, inputVal}) {
 
 
   return (
-    <div key={input.key} className={"input-group"}>
+    <div  key={input.key} className={"input-group"}>
     {input.label && <span style={{flex:0.2}} className="input-group-text" >
       {input.label}
     </span>}

@@ -36,8 +36,8 @@ function Pagination({ onPageChange,pageCount,friendsNum,wordPerPage,currPage }) 
   
 
 return (
-    <nav aria-label="...">
-      <ul className="pagination d-flex">
+    <nav>
+      <ul className="pagination" >
         <li style={{ flex: 1 }} className="page-item ">
           <a
             onClick={() => {
@@ -73,11 +73,15 @@ return (
             );
           } else if (page == ".") {
             return (
-              <div
-                style={{ fontSize: "19px", fontWeight: "bold", color: "blue" }}
-              >
-                ...............
-              </div>
+              <li style={{ flex: 1 }} className="page-item">
+                <a
+                  className={`text-center page-link fw-bold fs-4`}
+                  onClick={() => {}}
+                  href="#"
+                >
+                  ............
+                </a>
+              </li>
             );
           }
         })}

@@ -28,7 +28,7 @@ function Dictionary() {
 
   const [filters,setFilters] = useState(
     {like:{[KelimeFields.English]:(location.state && location.state.findWord) ? location.state.findWord : ""}
-    ,where:outletContext.filterOptions}
+    ,...outletContext.filterOptions}
     );
 
   const [pageFilter,setPageFilter] = useState({skip:0,limit:wordPerPage})
@@ -37,7 +37,12 @@ function Dictionary() {
 
   const [searchVal,setSearchValue] = useState(filters.like.english)
 
+  const [place,_setPlace] = useState(null); 
 
+
+  function setPlace(_place){
+    _setPlace(_place)
+  }
   
 
   async function getWordCount(){
@@ -113,7 +118,7 @@ function Dictionary() {
     outletContext.setPlace((prev)=>{
 
       return <>
-
+        {place}
         <SearchBox
         input={searchBoxInput}
         inputVal={searchVal}
@@ -122,13 +127,13 @@ function Dictionary() {
     }
       
     );
-  }, [searchVal]);
+  }, [searchVal,place]);
 
   return (
-    <div>
+    <div style={{paddingBottom:"15px"}}>
 
     
-      <WordTable filters={filters} pageFilter={pageFilter} />
+      <WordTable setPlace={setPlace}  filters={filters} pageFilter={pageFilter} />
 
       <Pagination onPageChange={handlePageChange} pageCount={pageCount} currPage={currPage}
        wordPerPage={wordPerPage} friendsNum={friendsNum} />

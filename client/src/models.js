@@ -1,7 +1,7 @@
 import { engLangNames } from "./speaker";
 
 export const WordTypes =  Object.freeze({Word:"word",Expression:"expression"});
-export const WordLevels = Object.freeze({Easy:"easy",Medium:"medium",Hard:"hard"});
+export const WordLevels = Object.freeze({Easy:"easy",Hard:"hard"});
 
 
 export const KelimeFields = Object.freeze({
