@@ -64,7 +64,7 @@
 }
 
 .number .frame .data{
-  color: rgb(90, 81, 81);
+  color: rgb(255, 255, 255);
 
 }
 
@@ -160,7 +160,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  background-image: url("../public/images/pexels-brett-sayles-4388477.jpg") ;
+  background-image: url("../public/images/pexels-pixabay-259280.jpg") ;
 }
 
 .sky-2{
@@ -168,7 +168,7 @@ cursor: pointer;
   
   background-repeat: no-repeat;
   
-  background-image: url("../public/images/pexels-brett-sayles-4455019.jpg") ;
+  background-image: url("../public/images/pexels-photo-440731.jpeg") ;
 }
 
 .number .my-input-group .range{
@@ -177,11 +177,11 @@ cursor: pointer;
   width: 30%;
   font-weight: bold;
   font-size: 22px;
-  color: rgb(227, 235, 239);
+  color: rgb(0, 45, 68);
 }
 
 .number .range .scale{
-  color: #f3d887;
+  color: #277743;
   font-size: 14px;
   display: flex;
   position: relative;

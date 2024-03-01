@@ -73,11 +73,11 @@ function Dictionary() {
       if (wordCount > 0) {
 
         if(currPage != 1){
-          setCurrPage(1)
+          handlePageChange(1)
         }
 
       }else {
-        setCurrPage(0)
+        handlePageChange(0)
       };
 
     });
