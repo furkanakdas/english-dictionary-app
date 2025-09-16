@@ -12,15 +12,9 @@ import Range from './utility/inputs/Range.js';
 
 
 function App() {
-
-  let location = useLocation();
-
-  
   
   return (
     <div className="app">
-
-
 
       <Routes>
         <Route path="/" element={<Navigate to={"/number"} />} />
