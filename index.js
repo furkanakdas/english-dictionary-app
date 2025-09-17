@@ -26,7 +26,7 @@ const port = process.env.PORT || 3001;
 
 try{
   await mongoose
-  .connect(process.env.CONNECTION_URL  , {
+  .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
